@@ -27,7 +27,11 @@ module.exports = function (gulp, plugins, options) {
   });
 
   gulp.task('compile:vendorjs', function () {
+    if(options.js.vendorFiles.length === 0){
 
+      plugins.notify("Sin VENDORS JS que compilar.");
+      return Promise.resolve('Vendors ignored');
+    }
     return gulp.src(
       options.js.vendorFiles
     )

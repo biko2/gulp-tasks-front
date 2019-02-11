@@ -15,6 +15,7 @@ module.exports = function (gulp, plugins, options) {
       'compile:vendorjs',
       'images',
       'fonts',
+      'twigPages',
       gulp.series('minify:css',
         'minify:js')
         /*'compile:styleguide',*/
@@ -28,7 +29,19 @@ module.exports = function (gulp, plugins, options) {
       'compile:sass',
       'compile:js',
       'compile:vendorjs',
+      'twigPages'
       )
 
   );
+  gulp.task('buildWithJekyll',  gulp.series(
+    'compile:sass',
+    'compile:js',
+    'compile:vendorjs',
+    'images',
+    'fonts',
+    'jekyll',
+    gulp.series('minify:css',
+      'minify:js')
+
+  ));
 };

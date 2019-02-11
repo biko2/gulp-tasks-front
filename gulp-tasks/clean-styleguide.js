@@ -16,5 +16,6 @@ module.exports = function (gulp, plugins, options) {
       options.styleGuide.destination + 'public',
       options.css.destination + '**/*.twig'
     ]);
+    return Promise.resolve();
   });
 };

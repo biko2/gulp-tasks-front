@@ -13,5 +13,7 @@ module.exports = function (gulp, plugins, options) {
     plugins.del.sync([
       options.js.destination
     ]);
+    return Promise.resolve();
+
   });
 };

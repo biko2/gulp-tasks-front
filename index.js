@@ -1,40 +1,4 @@
-// Tasks
-
-
-// Used to generate relative paths for style guide output.
 var path = require('path');
-
-// These are used in the options below.
-var paths = {
-  styles: {
-    source: 'src/assets/scss/',
-    destination: 'assets/css/'
-  },
-  scripts: {
-    source: 'src/assets/js/',
-    destination: 'assets/js',
-    
-  },
-  scriptsVendorFiles: [
-
-  ],
-  images: {
-    source: 'src/assets/images/',
-    destination: 'assets/images/'
-  },
-  fonts: {
-    source: 'src/assets/fonts/',
-    destination: 'assets/fonts/'
-  },
-  styleGuide: 'styleguide',
-  jekyll: 'src/pages/'
-};
-
-
-
-
-
-
 
 module.exports = function (gulp, customPaths, customOptions) {
     'use strict';
@@ -53,7 +17,10 @@ var plugins = require('gulp-load-plugins')({
       'gulp-notify': 'notify',
       'gulp-concat': 'concat',
       'gulp-uglify': 'uglify',
-      'gulp-imagemin': 'imagemin'
+      'gulp-imagemin': 'imagemin',
+      'gulp-twig' : 'twig',
+      'gulp-data' : 'data',
+      'glob': 'glob',
         }
     });
     //Default paths.
@@ -68,7 +35,6 @@ var plugins = require('gulp-load-plugins')({
         
       },
       scriptsVendorFiles: [
-    
       ],
       images: {
         source: 'src/assets/images/',
@@ -79,7 +45,12 @@ var plugins = require('gulp-load-plugins')({
         destination: 'assets/fonts/'
       },
       styleGuide: 'styleguide',
-      jekyll: 'src/pages/'
+      jekyll: 'src/pages/',
+      twigPages: {
+        src: 'src/twigPages/' ,
+        data: 'src/twigPages/data/',
+        destination: 'assets/pages/'
+      }
     };
 
 
@@ -88,9 +59,7 @@ var plugins = require('gulp-load-plugins')({
 
     //Default options.
     var options = {
-
         // ----- Browsersync ----- //
-      
         browserSync: {
           // Put your local site URL here to prevent Browsersync
           // from prompting you to add additional scripts to your page.
@@ -173,6 +142,13 @@ var plugins = require('gulp-load-plugins')({
           files: paths.images.source + '**/*.{png,gif,jpg,svg,xml,webmanifest}',
           destination: paths.images.destination
         },
+        // ----- TWIG pages ---- //
+        twigPages: {
+          src: path.join(paths.twigPages.src, '/*.twig'),
+          allSrc: path.join(paths.twigPages.src, '/**/*'), //Needed for watch task
+          data:path.join(paths.twigPages.data),
+          destination: path.join(paths.twigPages.destination)
+        },
       
         // ----- KSS Node ----- //
         styleGuide: {
@@ -230,11 +206,13 @@ var plugins = require('gulp-load-plugins')({
 
 
     //Cargamos las task del gulp.
+    require('./gulp-tasks/twigpages')(gulp, plugins, options);
     require('./gulp-tasks/browser-sync')(gulp, plugins, options);
     require('./gulp-tasks/images')(gulp, plugins, options);
     require('./gulp-tasks/clean-css')(gulp, plugins, options);
     require('./gulp-tasks/clean-js')(gulp, plugins, options);
     require('./gulp-tasks/clean-styleguide')(gulp, plugins, options);
+    require('./gulp-tasks/clean-twigpages')(gulp, plugins, options);
     require('./gulp-tasks/clean')(gulp, plugins, options);
     require('./gulp-tasks/compile-sass')(gulp, plugins, options);
     require('./gulp-tasks/compile-js')(gulp, plugins, options);

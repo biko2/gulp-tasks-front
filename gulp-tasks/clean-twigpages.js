@@ -1,6 +1,6 @@
 /**
  * @file
- * Task: Clean:CSS.
+ * Task: Clean:JS.
  */
 
  /* global module */
@@ -8,12 +8,11 @@
 module.exports = function (gulp, plugins, options) {
   'use strict';
 
-  // Clean CSS files.
-  gulp.task('clean:css', function () {
+  // Clean js files.
+  gulp.task('clean:twigPages', function () {
     plugins.del.sync([
-      options.css.files
+      options.twigPages.destination
     ]);
     return Promise.resolve();
-
   });
 };
