@@ -134,7 +134,7 @@ var plugins = require('gulp-load-plugins')({
         },
         // ----- Fonts ----- //
         fonts: {
-          files: paths.fonts.source + '**/*.{ttf,woff,otf,eot,svg}',
+          files: paths.fonts.source + '**/*.{ttf,woff,otf,eot,svg,woff2}',
           destination: paths.fonts.destination
         },
         // ----- Images ----- //
