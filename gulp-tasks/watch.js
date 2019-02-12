@@ -12,7 +12,7 @@ module.exports = function (gulp, plugins, options) {
 
   gulp.task('watch:js'
     , function () {
-        return gulp.watch([options.js.files],gulp.series(
+        return gulp.watch(options.js.files,gulp.series(
               'lint:js',
               'compile:js',
               'minify:js',
