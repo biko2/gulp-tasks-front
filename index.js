@@ -21,6 +21,7 @@ var plugins = require('gulp-load-plugins')({
       'gulp-twig' : 'twig',
       'gulp-data' : 'data',
       'glob': 'glob',
+      'flatten': 'gulp-flatten',
         }
     });
     //Default paths.
@@ -48,8 +49,10 @@ var plugins = require('gulp-load-plugins')({
       jekyll: 'src/pages/',
       twigPages: {
         src: 'src/twigPages/' ,
+        componentsSrc: 'src/twigPages/components/' ,
         data: 'src/twigPages/data/',
-        destination: 'assets/pages/'
+        destination: 'assets/pages/',
+        componentsDestination:'assets/pages/components'
       }
     };
 
@@ -144,10 +147,13 @@ var plugins = require('gulp-load-plugins')({
         },
         // ----- TWIG pages ---- //
         twigPages: {
+          baseSrc: path.join(paths.twigPages.src),
           src: path.join(paths.twigPages.src, '/*.twig'),
+          componentsSrc: path.join(paths.twigPages.componentsSrc, '/**/*.twig'),
           allSrc: path.join(paths.twigPages.src, '/**/*'), //Needed for watch task
           data:path.join(paths.twigPages.data),
-          destination: path.join(paths.twigPages.destination)
+          destination: path.join(paths.twigPages.destination),
+          componentsDestination: path.join(paths.twigPages.componentsDestination)
         },
       
         // ----- KSS Node ----- //
@@ -223,6 +229,8 @@ var plugins = require('gulp-load-plugins')({
     require('./gulp-tasks/minify-css')(gulp, plugins, options);
     require('./gulp-tasks/minify-js')(gulp, plugins, options);
     require('./gulp-tasks/fonts')(gulp, plugins, options);
+    //require('./gulp-tasks/drupal-libraries')(gulp, plugins, options);
+
     require('./gulp-tasks/build')(gulp, plugins, options);
     require('./gulp-tasks/watch')(gulp, plugins, options);
     require('./gulp-tasks/serve')(gulp, plugins, options);
