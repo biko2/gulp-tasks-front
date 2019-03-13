@@ -35,7 +35,17 @@
                     componentList:componentList
                 }
             }))
-            .pipe(plugins.twig({base:path.join(options.twigPages.baseSrc)}))
+            .pipe(plugins.twig({
+                base:path.join(options.twigPages.baseSrc),
+                functions:[
+                    {
+                        name: "svgSprite",
+                        func: function (args) {
+                            return '<svg><use xlink:href="/svg/sprite/sprite.svg#' + args + '"></use></svg>';
+                        }
+                    }
+                ]
+            }))
             .on('error', function (err) {
                 process.stderr.write(err.message + '\n');
                 this.emit('end');
@@ -76,9 +86,9 @@
             base:path.join(options.twigPages.baseSrc),
             functions:[
                 {
-                    name: "testFunc",
+                    name: "svgSprite",
                     func: function (args) {
-                        return "the function " + args;
+                        return '<svg><use xlink:href="/svg/sprite/sprite.svg#' + args + '"></use></svg>';
                     }
                 }
             ]
@@ -98,7 +108,18 @@
                     this.emit('end');
                 }
             }))
-            .pipe(plugins.twig({useFileContents:true}))
+            .pipe(plugins.twig({
+                useFileContents:true,
+                base:path.join(options.twigPages.baseSrc),
+                functions:[
+                    {
+                        name: "svgSprite",
+                        func: function (args) {
+                            return '<svg><use xlink:href="/svg/sprite/sprite.svg#' + args + '"></use></svg>';
+                        }
+                    }
+                ]
+            }))
             .on('error', function (err) {
                 process.stderr.write(err.message + '\n');
                 this.emit('end');

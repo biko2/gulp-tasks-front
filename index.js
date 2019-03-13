@@ -22,6 +22,7 @@ var plugins = require('gulp-load-plugins')({
       'gulp-data' : 'data',
       'glob': 'glob',
       'flatten': 'gulp-flatten',
+      'gulp-svg-sprite': 'svgsprite',
         }
     });
     //Default paths.
@@ -53,6 +54,10 @@ var plugins = require('gulp-load-plugins')({
         data: 'src/twigPages/data/',
         destination: 'assets/pages/',
         componentsDestination:'assets/pages/components'
+      },
+      svg : {
+        source: 'src/assets/svg',
+        destination: 'assets/svg'
       }
     };
 
@@ -118,7 +123,8 @@ var plugins = require('gulp-load-plugins')({
           files: path.join(paths.scripts.source, '**/*.js'),
           compiledFiles: path.join(paths.scripts.destination, '**/*.js'),
           vendorFiles: paths.scriptsVendorFiles,
-          destination: path.join(paths.scripts.destination)
+          destination: path.join(paths.scripts.destination),
+          vendorDestination: path.join(paths.scripts.destination,'vendors')
         },
       
         // ----- eslint ----- //
@@ -204,6 +210,44 @@ var plugins = require('gulp-load-plugins')({
             warnings: 10,
             notices: -1
           }
+        },
+        svg: {
+          files: path.join(paths.svg.source, '**/*.svg'),
+          destination: path.join(paths.svg.destination),
+          mode: {
+            symbol: { // symbol mode to build the SVG
+              render: {
+                css: true, // CSS output option for icon sizing
+                scss: true // SCSS output option for icon sizing
+              },
+              dest: 'sprite', // destination folder
+              prefix: '.svg--%s', // BEM-style prefix if styles rendered
+              sprite: 'sprite.svg', //generated sprite name
+              example: true // Build a sample page, please!
+            }
+          },
+        },
+        svg2: {
+          files: path.join(paths.svg.source, '**/*.svg'),
+          destination: path.join(paths.svg.destination),
+          mode: {
+            symbol: { // symbol mode to build the SVG
+              //dest: path.join(paths.svg.destination), // destination foldeer
+              sprite: 'sprite.svg', //sprite name
+              example: true // Build sample page
+            },
+            css: { // Activate the «view» mode
+            //  bust: false,
+             // dest: path.join(paths.svg.destination),
+              render: {
+                css: true // Activate Sass output (with default options)
+              }
+            }
+          },
+          svg: {
+            xmlDeclaration: false, // strip out the XML attribute
+            doctypeDeclaration: false // don't include the !DOCTYPE declaration
+          }
         }
     }
 
@@ -212,6 +256,7 @@ var plugins = require('gulp-load-plugins')({
 
 
     //Cargamos las task del gulp.
+    require('./gulp-tasks/svg')(gulp, plugins, options);
     require('./gulp-tasks/twigpages')(gulp, plugins, options);
     require('./gulp-tasks/browser-sync')(gulp, plugins, options);
     require('./gulp-tasks/images')(gulp, plugins, options);
@@ -229,7 +274,7 @@ var plugins = require('gulp-load-plugins')({
     require('./gulp-tasks/minify-css')(gulp, plugins, options);
     require('./gulp-tasks/minify-js')(gulp, plugins, options);
     require('./gulp-tasks/fonts')(gulp, plugins, options);
-    //require('./gulp-tasks/drupal-libraries')(gulp, plugins, options);
+    require('./gulp-tasks/drupal-libraries')(gulp, plugins, options);
 
     require('./gulp-tasks/build')(gulp, plugins, options);
     require('./gulp-tasks/watch')(gulp, plugins, options);

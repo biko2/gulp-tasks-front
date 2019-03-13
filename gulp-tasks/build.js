@@ -16,6 +16,7 @@ module.exports = function (gulp, plugins, options) {
       'images',
       'fonts',
       'twigPages',
+      'svg',
       gulp.series('minify:css',
         'minify:js')
         /*'compile:styleguide',*/
@@ -29,7 +30,8 @@ module.exports = function (gulp, plugins, options) {
       'compile:sass',
       'compile:js',
       'compile:vendorjs',
-      'twigPages'
+      'twigPages',
+      'svg'
       )
 
   );

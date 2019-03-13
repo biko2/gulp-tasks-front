@@ -1,5 +1,11 @@
 # GULP TASKS for Drupal __front__ theme
-> by BIKO2
+![by Biko2](https://raw.githubusercontent.com/biko2/biko-repo-bagdes/master/png/biko-bagge-pill.png)
+![GitHub last commit](https://img.shields.io/github/last-commit/biko2/gulp-tasks-front.svg?style=plastic)
+![npm](https://img.shields.io/npm/v/gulp-tasks-front.svg)
+![node](https://img.shields.io/node/v/gulp.svg)
+![Maintenance](https://img.shields.io/maintenance/yes/2020.svg)
+
+
 
 ## Install
 ```
@@ -20,6 +26,7 @@ npm install gulp-tasks-front --save-dev
 - images: Optimizes images.
 - jekyll: Compiles Jekyll pages. Works but DEPRECATED in favor of TwigPages
 - twigPages: Compiles Twig based static pages.
+- svg: SVG Sprite sheet. Compiles svg files into sprite sheet.
 
 ## Default paths
 ```
@@ -49,6 +56,10 @@ npm install gulp-tasks-front --save-dev
         src: 'src/twigPages/' ,
         data: 'src/twigPages/data/',
         destination: 'assets/pages/'
+      },
+      svg : {
+        source: 'src/assets/svg',
+        destination: 'assets/svg'
       }
     };
 
@@ -195,6 +206,21 @@ var options = {
             errors: 1,
             warnings: 10,
             notices: -1
+          }
+        },
+        svg: {
+          files: path.join(paths.svg.source, '**/*.scss'),
+          destination: path.join(paths.svg.destination),
+          mode: {
+            symbol: { // symbol mode to build the SVG
+              dest: path.join(paths.svg.destination), // destination foldeer
+              sprite: 'sprite.svg', //sprite name
+              example: true // Build sample page
+            }
+          },
+          svg: {
+            xmlDeclaration: false, // strip out the XML attribute
+            doctypeDeclaration: false // don't include the !DOCTYPE declaration
           }
         }
     }

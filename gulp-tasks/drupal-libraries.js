@@ -14,7 +14,7 @@ module.exports = function (gulp, plugins, options) {
       let vendorsYml = {};
       for(var vendorFile of options.js.vendorFiles){
           let vendorName = path.parse(vendorFile)['name'] ;
-          let vendorPath = path.join(options.js.destination,path.basename(vendorFile));
+          let vendorPath = path.join(options.js.vendorDestination,path.basename(vendorFile));
           let vendor = {
             version: 'VERSION',
             js: {
@@ -23,7 +23,6 @@ module.exports = function (gulp, plugins, options) {
           };
           //vendorsYml.push(vendor);
           vendorsYml[vendorName] = vendor;
-          console.log(vendor);
           
       }
       console.log(yaml.dump(vendorsYml));
@@ -35,7 +34,7 @@ module.exports = function (gulp, plugins, options) {
         .pipe(plugins.plumber({ errorHandler: plugins.notify.onError('Error compilando VENDORS JS') }))
        // .pipe(plugins.concat('vendor.js'))
         .pipe(plugins.flatten())
-        .pipe(gulp.dest(options.js.destination))
+        .pipe(gulp.dest(options.js.vendorDestination))
         .pipe(plugins.notify("Compilación VENDORS JS terminada"));
     });
   };
