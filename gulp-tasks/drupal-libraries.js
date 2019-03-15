@@ -1,10 +1,10 @@
 var path = require('path');
 
 var yaml = require('js-yaml');
+var fs = require('fs');
 
 module.exports = function (gulp, plugins, options) {
     'use strict';
-  
     gulp.task('drupal:libraries', function () {
       if(options.js.vendorFiles.length === 0){
   
@@ -25,7 +25,14 @@ module.exports = function (gulp, plugins, options) {
           vendorsYml[vendorName] = vendor;
           
       }
-      console.log(yaml.dump(vendorsYml));
+      fs.writeFileSync(options.drupalLibraries.destination,yaml.dump(vendorsYml), function(err) {
+        // If an error occurred, show it and return
+        if(err) {
+          process.stderr.write(err.message + '\n');
+          return this.emit('end');
+        }
+        // Successfully wrote to the file!
+      });
       
       //return Promise.resolve('Vendors finished');
       return gulp.src(
@@ -35,7 +42,7 @@ module.exports = function (gulp, plugins, options) {
        // .pipe(plugins.concat('vendor.js'))
         .pipe(plugins.flatten())
         .pipe(gulp.dest(options.js.vendorDestination))
-        .pipe(plugins.notify("Compilación VENDORS JS terminada"));
+        .pipe(plugins.notify({message:"Drupal libraries generated.", onLast: true}));
     });
   };
   

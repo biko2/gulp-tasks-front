@@ -60,6 +60,8 @@ var plugins = require('gulp-load-plugins')({
         destination: 'assets/svg'
       }
     };
+console.log(paths);
+console.log(customPaths);
 
 
     //Mezclamos los custom paths con los defaults.
@@ -67,6 +69,9 @@ var plugins = require('gulp-load-plugins')({
 
     //Default options.
     var options = {
+        drupalLibraries: {
+          destination:'./generated.libraries.yml'
+        },
         // ----- Browsersync ----- //
         browserSync: {
           // Put your local site URL here to prevent Browsersync
