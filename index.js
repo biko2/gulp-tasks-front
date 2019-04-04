@@ -280,6 +280,7 @@ console.log(customPaths);
     require('./gulp-tasks/minify-js')(gulp, plugins, options);
     require('./gulp-tasks/fonts')(gulp, plugins, options);
     require('./gulp-tasks/drupal-libraries')(gulp, plugins, options);
+    require('./gulp-tasks/drupal-dev')(gulp, plugins, options);
 
     require('./gulp-tasks/build')(gulp, plugins, options);
     require('./gulp-tasks/watch')(gulp, plugins, options);
