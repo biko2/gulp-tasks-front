@@ -9,7 +9,7 @@
     let fs = require('fs');
     let glob = require('glob');
     let funcSvgSprite = function(id){
-        return '<svg><use xlink:href="/assets/svg/sprite/sprite.svg#' + id + '"></use></svg>';
+        return '<svg><use xlink:href="' + options.svg.prefix.dev + '/svg/sprite/sprite.svg#' + id + '"></use></svg>';
     }
       gulp.task('twigPages:base', function () {
         //Define empty variable for page list.

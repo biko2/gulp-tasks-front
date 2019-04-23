@@ -57,7 +57,11 @@ var plugins = require('gulp-load-plugins')({
       },
       svg : {
         source: 'src/assets/svg',
-        destination: 'assets/svg'
+        destination: 'assets/svg',
+        prefix: {
+          dev: '',
+          pro: '/svg/sprite'
+        }
       }
     };
 console.log(paths);
@@ -231,6 +235,7 @@ console.log(customPaths);
               example: true // Build a sample page, please!
             }
           },
+          prefix: paths.svg.prefix
         },
         svg2: {
           files: path.join(paths.svg.source, '**/*.svg'),
