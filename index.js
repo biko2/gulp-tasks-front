@@ -62,6 +62,10 @@ var plugins = require('gulp-load-plugins')({
           dev: '',
           pro: '/svg/sprite'
         }
+      },
+      linter: {
+        scss: true,
+        js: true
       }
     };
 console.log(paths);

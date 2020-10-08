@@ -10,6 +10,9 @@ module.exports = function (gulp, plugins, options) {
 
   // Lint scss files.
   gulp.task('lint:css', function () {
+    if(!options.linter.scss){
+      return cb();
+    }
     return gulp.src(options.sass.files)
       .pipe(plugins.plumber({ errorHandler: plugins.notify.onError('Error SCSS linter') }))
       .pipe(plugins.gulpStylelint({

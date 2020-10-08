@@ -9,7 +9,10 @@ module.exports = function (gulp, plugins, options) {
   'use strict';
 
   // Lint JavaScript.
-  gulp.task('lint:js', function () {
+  gulp.task('lint:js', function (cb) {
+    if(!options.linter.js){
+      return cb();
+    }
     return gulp.src(options.jsLinting.files.theme)
       .pipe(plugins.plumber({ errorHandler: plugins.notify.onError('Error JS linter') }))
       .pipe(plugins.gulpEslint({
@@ -20,6 +23,9 @@ module.exports = function (gulp, plugins, options) {
   });
 
   gulp.task('lint:js-gulp', function () {
+    if(!options.linter.js){
+      return cb();
+    }
     return gulp.src(options.jsLinting.files.gulp)
       .pipe(plugins.plumber())
       .pipe(plugins.gulpEslint({
