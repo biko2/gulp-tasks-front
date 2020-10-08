@@ -18,9 +18,10 @@ module.exports = function (gulp, plugins, options) {
       .pipe(plugins.babel({
         presets: ['es2015']
       }))
-      .pipe(plugins.sourcemaps.write())
       .pipe(plugins.plumber.stop())
       .pipe(plugins.concat('app.js'))
+      .pipe(plugins.sourcemaps.write())
+
       .pipe(gulp.dest(options.js.destination))
       .pipe(plugins.notify("Compilación JS terminada"));
 
